@@ -9,30 +9,23 @@ public class P09SpiceMustFlow {
         Scanner scanner= new Scanner(System.in);
 
         int startingYield= Integer.parseInt(scanner.nextLine());
-        int spicesYield=startingYield;
-        int spicesLeft=startingYield;
+        int yield=startingYield;
+        int yieldWorkers=yield;
+        int totalLeft=0;
+        int days=0;
 
-        int spicesTotal=0;
+        while (yield>=100){
 
-        int dayCounter=0;
-        int workersConsume=0;
+            yieldWorkers=yield-26;
+            totalLeft=totalLeft+yieldWorkers;
 
-        while (spicesYield>100){
-
-            spicesLeft=spicesYield-26;
-            spicesYield=spicesYield-10;
-
-            dayCounter++;
-            spicesTotal=spicesTotal+spicesLeft;
-
-
+            yield=yield-10;
+            days++;
 
         }
-
-
-        spicesTotal=spicesTotal-26;
-        System.out.println(dayCounter);
-        System.out.println(spicesTotal);
+        totalLeft=totalLeft-26;
+        System.out.println(days);
+        System.out.println(totalLeft);
 
     }
 }

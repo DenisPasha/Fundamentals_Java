@@ -7,11 +7,10 @@ public class P08BeerKegs {
 
 
         Scanner scanner = new Scanner(System.in);
+
         int n= Integer.parseInt(scanner.nextLine());
-        double volume=0;
+        double volume=Double.MAX_VALUE;
         String winnerModel="";
-
-
 
         for (int i = 1; i <=n ; i++) {
 
@@ -20,8 +19,6 @@ public class P08BeerKegs {
             double height= Double.parseDouble(scanner.nextLine());
 
           double currentvolume=0;
-
-
             currentvolume=Math.PI*Math.pow(radius,2)*height;
 
             if (currentvolume>volume){
@@ -29,10 +26,9 @@ public class P08BeerKegs {
                 winnerModel=model;
             }
 
-
-
         }
         System.out.printf("%s",winnerModel);
+
 
 
     }
