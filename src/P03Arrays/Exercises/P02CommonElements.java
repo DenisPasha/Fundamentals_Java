@@ -8,23 +8,20 @@ public class P02CommonElements {
         Scanner scanner = new Scanner(System.in);
 
 
-        String text1=scanner.nextLine();
-        String text2=scanner.nextLine();
+        String [] input1=scanner.nextLine().split(" ");
+        String [] input2=scanner.nextLine().split(" ");
 
-        String[] fArray=text1.split(" ");
-        String[] sArray=text2.split(" ");
+        for (int i = 0; i < input2.length; i++) {
 
-        for (int i = 0; i < fArray.length; i++) {
+            for (int j = 0; j < input1.length; j++) {
 
-            for (int j = 0; j <sArray.length ; j++) {
-
-                if (fArray[i].equals(sArray[j])){
-                    System.out.printf("%s ",fArray[i]);
+                if (input2[j].equals(input1[i])){
+                    System.out.print(input2[j]+" ");
+                    break;
                 }
-
             }
-
         }
+
 
     }
 }

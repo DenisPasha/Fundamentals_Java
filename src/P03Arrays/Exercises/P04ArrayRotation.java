@@ -1,5 +1,6 @@
 package P03Arrays.Exercises;
 
+import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -9,42 +10,28 @@ public class P04ArrayRotation {
         Scanner scanner = new Scanner(System.in);
 
 
-        String numStream=scanner.nextLine();
-        int position=Integer.parseInt(scanner.nextLine());
-        int poss=position;
-
-        String[] arrayFirst=numStream.split(" ");
-
-        if(position > arrayFirst.length)
-        {
-            position -= arrayFirst.length;
-        }
-        String[]arrNew=new String[arrayFirst.length-position];
-        int counter=0;
-        String[] temp=new String[position];
+        int [] numbers=Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
 
-        for (int i = 0; i < position; i++) {
+        int rotations=Integer.parseInt(scanner.nextLine());
 
-            temp[i]=arrayFirst[i];
-        }
+        for (int i = 1; i <=rotations ; i++) {
 
-        for (int i = 0; i < arrayFirst.length-position ; i++) {
+            int firstE=0;
+            firstE=numbers[0];
+            for (int j = 0; j < numbers.length-1; j++) {
 
-            arrNew[i]=arrayFirst[i+position];
+                numbers[j]=numbers[j+1];
+
+            }
+            numbers[numbers.length-1]=firstE;
 
         }
-        String[] lastArray=new String[arrNew.length+temp.length];
-        System.arraycopy(arrNew,0,lastArray,0,arrNew.length);
-        System.arraycopy(temp,0,lastArray,arrNew.length,temp.length);
 
-        for (int g = 0; g < lastArray.length; g++) {
-            System.out.print(lastArray[g]+" ");
+        for (int item:numbers) {
+            System.out.print(item+" ");
         }
-
-
-
-
-
     }
 }

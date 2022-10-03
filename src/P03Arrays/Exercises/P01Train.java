@@ -8,27 +8,24 @@ public class P01Train {
 
         Scanner scanner = new Scanner(System.in);
 
-        int n=Integer.parseInt(scanner.nextLine());
+     int n=Integer.parseInt(scanner.nextLine());
 
-        int sum=0;
-        int[]peoples=new int[n];
-
+     int sum=0;
+     int numbers[]=new int[n];
         for (int i = 0; i <n ; i++) {
 
-            int peopleCount=Integer.parseInt(scanner.nextLine());
-            sum+=peopleCount;
+             int number=Integer.parseInt(scanner.nextLine());
 
-            for (int j = 0; j <peoples.length ; j++) {
-
-                peoples[i]=peopleCount;
-            }
-
+             sum+=number;
+             numbers[i]=number;
 
         }
-        for (int l = 0; l <peoples.length ; l++) {
-            System.out.print(peoples[l]+" ");
+        for (int item:numbers) {
+            System.out.print(item+" ");
         }
         System.out.println();
         System.out.println(sum);
+
+
     }
 }

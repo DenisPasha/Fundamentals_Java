@@ -19,8 +19,6 @@ public class P01EncryptSortandPrintArray {
             int vowelSum=0;
             int consonantSum=0;
 
-
-
             char[] inputArr=input.toCharArray();
 
             for (char currentLatter : inputArr) {
@@ -41,9 +39,6 @@ public class P01EncryptSortandPrintArray {
             consonantSum=consonantSum/ length;
             int total=vowelSum+consonantSum;
             numbers[i]=total;
-
-
-
 
 
         }

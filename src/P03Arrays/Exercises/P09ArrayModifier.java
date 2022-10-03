@@ -17,7 +17,6 @@ public class P09ArrayModifier {
             inputArrOriginal[i]=inputArr[i];
         }
 
-
         String command=scanner.nextLine();
 
         while (!command.equals("end")){
@@ -53,12 +52,8 @@ public class P09ArrayModifier {
                 for (int i = 0; i < inputArr.length; i++) {
 
                     inputArr[i]=inputArr[i]-1;
-
                 }
-
             }
-
-
             command=scanner.nextLine();
 
         }
@@ -69,8 +64,6 @@ public class P09ArrayModifier {
                 System.out.print(inputArr[i]);
             }
 
-
-           // System.out.print(inputArr[i]+", ");
         }
     }
 }

@@ -10,40 +10,42 @@ public class P06EqualSums {
 
         int[]inputArray= Arrays.stream(scanner.nextLine().split(" ")).mapToInt(value -> Integer.parseInt(value)).toArray();
 
-
-        int position=0;
-        boolean isNot=false;
-        boolean itIs=false;
-
+        int sumLeft=0;
+        int sumRight=0;
+        boolean notFound=false;
+        int number=0;
+        
         for (int i = 0; i < inputArray.length; i++) {
 
-           int sumToRight=0;
-           int sumToLeft=0;
+            sumLeft=0;
+            sumRight=0;
+            if (i!=0){
 
-            for (int j = i+1; j <inputArray.length ; j++) {
-                sumToRight=sumToRight+inputArray[j];
+                for (int j = i; j >0 ; j--) {
+
+                    sumLeft=sumLeft+inputArray[j-1];
+
+                }
+                for (int k = i+1; k < inputArray.length ; k++) {
+
+                    sumRight=sumRight+inputArray[k];
+
+                }
+                if (sumLeft==sumRight){
+                    number=i;
+                   // System.out.println(i);
+                    break;
+                }
+                
             }
 
-            for (int k=i-1;k>=0;k--) {
-                sumToLeft=sumToLeft+inputArray[k];
-            }
-
-            if (sumToLeft==sumToRight){
-                itIs=true;
-                position=i;
-            }else {
-                 isNot=true;
-            }
+            
         }
-
-        if (itIs){
-            System.out.println(position);
-        }else if (isNot){
-            System.out.println("no");
+        if (sumLeft==sumRight){
+            System.out.println(number);
         }else {
-            System.out.println(0);
+            System.out.println("no");
         }
-
 
 
     }
