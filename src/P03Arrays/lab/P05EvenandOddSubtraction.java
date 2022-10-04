@@ -7,24 +7,22 @@ public class P05EvenandOddSubtraction {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        int [] inputArr=Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
-
-
-
-        int[] numbers= Arrays.stream(scanner.nextLine().split(" ")).mapToInt(e-> Integer.parseInt(e)).toArray();
 
         int evenSum=0;
         int oddSum=0;
 
-
-        for (int number:numbers) {
-            if (number % 2 == 0){
-                evenSum+=number;
+        for (int i = 0; i < inputArr.length; i++) {
+            if (inputArr[i]%2==0){
+                evenSum+=inputArr[i];
             }else {
-                oddSum+=number;
+                oddSum+=inputArr[i];
             }
-            
         }
+
         int diff=evenSum-oddSum;
         System.out.println(diff);
 

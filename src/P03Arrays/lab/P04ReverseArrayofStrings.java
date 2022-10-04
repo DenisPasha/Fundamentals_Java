@@ -8,23 +8,14 @@ public class P04ReverseArrayofStrings {
 
         Scanner scanner = new Scanner(System.in);
 
-        String text=scanner.nextLine();
+        String [] inputArr=scanner.nextLine().split(" ");
 
-        String[] array=text.split(" ");
-
-        for (int i = array.length-1; i >= 0 ; i--) {
-
-            System.out.print(array[i]+" ");
-
-
+        for (int i = 0; i < inputArr.length/2; i++) {
+            String old = inputArr[i];
+            inputArr[i]=inputArr[inputArr.length-1-i];
+            inputArr[inputArr.length-1-i]=old;
 
         }
-
-
-
-
-
-
-
+        System.out.println(String.join(" ",inputArr));
     }
 }

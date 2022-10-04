@@ -14,14 +14,14 @@ public class P02CommonElements {
         for (int i = 0; i < input2.length; i++) {
 
             for (int j = 0; j < input1.length; j++) {
-
-                if (input2[j].equals(input1[i])){
-                    System.out.print(input2[j]+" ");
+                if (input1[j].equals(input2[i])){
+                    System.out.print(input1[j]+" ");
                     break;
                 }
             }
-        }
 
+
+        }
 
     }
 }

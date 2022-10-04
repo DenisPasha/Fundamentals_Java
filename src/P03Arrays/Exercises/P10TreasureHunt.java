@@ -12,7 +12,6 @@ public class P10TreasureHunt {
         Scanner scanner = new Scanner(System.in);
 
 
-
         String[] treasureChest = scanner.nextLine().split("\\|");
 
         String command = scanner.nextLine();
@@ -95,6 +94,7 @@ public class P10TreasureHunt {
         } else {
             System.out.println("Failed treasure hunt.");
         }
+
 
     }
 }

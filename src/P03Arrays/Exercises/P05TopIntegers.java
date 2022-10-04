@@ -10,18 +10,22 @@ public class P05TopIntegers {
 
         int[] inputArray = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(value -> Integer.parseInt(value)).toArray();
 
+
         for (int i = 0; i < inputArray.length; i++) {
+
             int currentNum=inputArray[i];
-            for (int j = i+1; j < inputArray.length; j++) {
+
+            for (int j = i+1; j < inputArray.length-1; j++) {
                 if (currentNum>inputArray[j]){
                     System.out.print(currentNum+" ");
-                    break;
+
                 }
+                break;
+
             }
+
         }
-
         System.out.println(inputArray[inputArray.length-1]);
-
     }
 
 }

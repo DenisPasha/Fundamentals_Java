@@ -11,21 +11,20 @@ public class P01Train {
      int n=Integer.parseInt(scanner.nextLine());
 
      int sum=0;
-     int numbers[]=new int[n];
-        for (int i = 0; i <n ; i++) {
+     int []people=new int[n];
 
-             int number=Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < n; i++) {
+            int numberOfPeople=Integer.parseInt(scanner.nextLine());
 
-             sum+=number;
-             numbers[i]=number;
+            sum+=numberOfPeople;
+            people[i]=numberOfPeople;
 
         }
-        for (int item:numbers) {
+
+        for (int item:people) {
             System.out.print(item+" ");
         }
         System.out.println();
         System.out.println(sum);
-
-
     }
 }

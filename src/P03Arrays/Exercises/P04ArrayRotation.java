@@ -17,19 +17,17 @@ public class P04ArrayRotation {
 
         int rotations=Integer.parseInt(scanner.nextLine());
 
+
         for (int i = 1; i <=rotations ; i++) {
 
-            int firstE=0;
-            firstE=numbers[0];
+            int element=numbers[0];
             for (int j = 0; j < numbers.length-1; j++) {
 
                 numbers[j]=numbers[j+1];
-
             }
-            numbers[numbers.length-1]=firstE;
+            numbers[numbers.length-1]=element;
 
         }
-
         for (int item:numbers) {
             System.out.print(item+" ");
         }

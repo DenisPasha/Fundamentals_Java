@@ -9,27 +9,32 @@ public class P06EqualArrays {
         Scanner scanner = new Scanner(System.in);
 
 
-        int[] numbers1= Arrays.stream(scanner.nextLine().split(" ")).mapToInt(e-> Integer.parseInt(e)).toArray();
-        int[] numbers2= Arrays.stream(scanner.nextLine().split(" ")).mapToInt(e-> Integer.parseInt(e)).toArray();
+        int [] input1=Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
+        int [] input2=Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
         int sum=0;
-        boolean notIdentical=false;
+        int diff=0;
+        boolean isDifferent=false;
 
-        for (int i = 0; i <numbers1.length ; i++) {
 
-          if (numbers1[i]!=numbers2[i]){
+        for (int i = 0; i < input1.length; i++) {
 
-              System.out.printf("Arrays are not identical. Found difference at %d index.",i);
-              notIdentical=true;
 
-              break;
-          }else {
-              sum+=numbers1[i];
-          }
+                if (input1[i]==input2[i]){
+                    sum+=input1[i];
+                }else {
+                     diff=i;
+                    isDifferent=true;
+                    break;
+                }
 
         }
-        if (!notIdentical){
-            System.out.printf("Arrays are identical. Sum: %d",sum);
+        if (isDifferent){
+            System.out.printf("Arrays are not identical. Found difference at %d index.",diff);
         }
 
 

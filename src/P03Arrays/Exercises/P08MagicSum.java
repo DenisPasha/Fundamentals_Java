@@ -14,16 +14,15 @@ public class P08MagicSum {
 
         int num=Integer.parseInt(scanner.nextLine());
 
-
-
-        int currentNum=0;
         for (int i = 0; i < inputArr.length; i++) {
-            currentNum=inputArr[i];
 
-            for (int j = i+1; j < inputArr.length; j++) {
-                if (currentNum+ inputArr[j]==num){
+            int currentNum=inputArr[i];
 
-                    System.out.println(currentNum+" "+inputArr[j]);
+            for (int j = i; j < inputArr.length; j++) {
+
+                if (currentNum+inputArr[j]==num){
+                    System.out.print(currentNum+" "+inputArr[j]);
+                    System.out.println();
                 }
             }
 

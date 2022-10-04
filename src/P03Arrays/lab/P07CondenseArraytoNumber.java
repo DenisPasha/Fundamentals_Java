@@ -8,16 +8,22 @@ public class P07CondenseArraytoNumber {
 
         Scanner scanner = new Scanner(System.in);
 
-        int[] input = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(e -> Integer.parseInt(e)).toArray();
-        while (input.length > 1) {
+     int[] inputArr=Arrays.stream(scanner.nextLine().split(" "))
+             .mapToInt(Integer::parseInt)
+             .toArray();
 
-            int[] condensed = new int[input.length - 1];
+     while (inputArr.length!=1){
 
-            for (int i = 0; i < condensed.length; i++) {
-                condensed[i] = input[i] + input[i + 1];
-            }
-            input = condensed;
+         int [] condensed=new int[inputArr.length-1];
+
+         for (int i = 0; i < condensed.length; i++) {
+             condensed[i]=inputArr[i]+inputArr[i+1];
+
+         }
+         inputArr=condensed;
+     }
+        for (int item:inputArr) {
+            System.out.print(item+" ");
         }
-        System.out.println(input[0]);
     }
 }

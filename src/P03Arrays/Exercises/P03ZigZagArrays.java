@@ -14,34 +14,30 @@ public class P03ZigZagArrays {
      int []numArr1= new int[n];
         int []numArr2= new int[n];
 
-        for (int i = 1; i <=n; i++) {
+        for (int i = 0; i < n; i++) {
 
-            int [] inputArr= Arrays.stream(scanner.nextLine().split(" "))
+            int[] inputArr=Arrays.stream(scanner.nextLine().split(" "))
                     .mapToInt(Integer::parseInt)
                     .toArray();
+            int num1=inputArr[0];
+            int num2=inputArr[1];
 
-            int input1=inputArr[0];
-            int input2=inputArr[1];
-
-
-            if (i % 2==0){
-               numArr1[i-1]=input2;
-                numArr2[i-1]=input1;
+            if (i%2==0){
+                numArr2[i]=num1;
+                numArr1[i]=num2;
             }else {
-                numArr1[i-1]=input1;
-                numArr2[i-1]=input2;
+                numArr1[i]=num1;
+                numArr2[i]=num2;
             }
 
-        }
 
+        }
         for (int item:numArr1) {
             System.out.print(item+" ");
         }
         System.out.println();
-        for (int item2:numArr2) {
-            System.out.print(item2+" ");
+        for (int items:numArr2) {
+            System.out.print(items+" ");
         }
-
-
     }
 }
