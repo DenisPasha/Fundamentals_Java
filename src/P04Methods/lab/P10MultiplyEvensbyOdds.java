@@ -24,7 +24,8 @@ public class P10MultiplyEvensbyOdds {
     public static int getEvenNumResult(int num){
 
         int evenResult=0;
-        for (int i = 1; i <=num; i++) {
+
+        while (num>0){
             int lastNum=num%10;
             if (lastNum%2==0){
                 evenResult+=lastNum;
@@ -32,13 +33,14 @@ public class P10MultiplyEvensbyOdds {
             num=num/10;
         }
         return evenResult;
-    }
+        }
+
 
     public static int getOddNumResult(int num){
 
         int oddResult=0;
 
-        for (int i = num; i >=0; i--) {
+        while (num>0){
             int lastNum=num%10;
 
             if (lastNum%2!=0){
@@ -47,6 +49,7 @@ public class P10MultiplyEvensbyOdds {
             num=num/10;
         }
         return oddResult;
+
     }
 
 }
