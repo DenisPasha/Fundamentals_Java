@@ -7,267 +7,311 @@ public class P06ArrayManipulator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-         int[] inputArray= Arrays.stream(scanner.nextLine().split(" "))
-                 .mapToInt(Integer::parseInt)
-                 .toArray();
-         String command=scanner.nextLine();
 
-         while (!command.equals("end")){
-             
-             if (command.contains("exchange")){
-                 String []commandArr=command.split(" ");
-                 int index= Integer.parseInt(commandArr[1]);
-                 if (index>=inputArray.length-1){
-                     System.out.println("Invalid index");
-                 }else {
-                     int[]newAr=exchange(inputArray,command);
-                     for (int item:newAr) {
-                         System.out.print(item+" ");
-                     }
-                 }
-             } else if (command.contains("max odd")) {
-                 System.out.println(maxOddIndex(inputArray));
+        String[] inputAsArray = scanner.nextLine().split("\\s+");
+        String command = scanner.nextLine();
 
-             } else if (command.contains("min odd")) {
-                 System.out.println(minOdd(inputArray));
+        while (!"end".equals(command)) {
+            String[] tokens = command.split("\\s+");
 
-             } else if (command.contains("min even")) {
-                 System.out.println(minEven(inputArray));
-
-             } else if (command.contains("max even")) {
-                 System.out.println(maxEven(inputArray));
-
-             } else if (command.contains("first") && command.contains("even")) {
-                 String [] commandArr=command.split(" ");
-                 int index= Integer.parseInt(commandArr[1]);
-
-                 for (int item:firstEven(inputArray,index)) {
-                     System.out.print(item+" ");
-                 }
-
-             } else if (command.contains("first") && command.contains("odd")) {
-                 String [] commandArr=command.split(" ");
-                 int index= Integer.parseInt(commandArr[1]);
-
-                 for (int item:firstOdd(inputArray,index)) {
-                     System.out.print(item+" ");
-                 }
-             } else if (command.contains("last") && command.contains("even")) {
-                 String [] commandArr=command.split(" ");
-                 int index= Integer.parseInt(commandArr[1]);
-
-                 for (int item:lastEven(inputArray,index)) {
-                     System.out.print(item+" ");
-                 }
-             } else if (command.contains("last") && command.contains("odd")) {
-                 String [] commandArr=command.split(" ");
-                 int index= Integer.parseInt(commandArr[1]);
-
-                 for (int item:lastOdd(inputArray,index)) {
-                     System.out.print(item+" ");
-                 }
-             }
-             command=scanner.nextLine();
-         }
-
-    }
-
-    private static int[] exchange(int[] inputArray, String command){
-
-        String []commandArr=command.split(" ");
-        int index= Integer.parseInt(commandArr[1]);
-
-        int[] tempArray=new int[inputArray.length];
-        int fElement=0;
-
-        for (int i = 0; i <= index; i++) {
-            fElement=inputArray[0];
-            for (int j = 0; j < inputArray.length-1; j++) {
-                tempArray[j]=inputArray[j+1];
+            if (tokens[0].equals("exchange")) {
+                inputAsArray = getNewArray(inputAsArray, tokens[1]);
+            } else if (tokens[0].equals("max")) {
+                if (tokens[1].equals("even")) {
+                    getMaxEven(inputAsArray);
+                } else {
+                    getMaxOdd(inputAsArray);
+                }
+            } else if (tokens[0].equals("min")) {
+                if (tokens[1].equals("even")) {
+                    getMinEven(inputAsArray);
+                } else {
+                    getMinOdd(inputAsArray);
+                }
+            } else if (tokens[0].equals("first")) {
+                if (tokens[2].equals("even")) {
+                    findFirstEven(inputAsArray, tokens[1]);
+                } else {
+                    findFirstOdd(inputAsArray, tokens[1]);
+                }
+            } else if (tokens[0].equals("last")) {
+                if (tokens[2].equals("even")) {
+                    findLastEven(inputAsArray, tokens[1]);
+                } else {
+                    findLastOdd(inputAsArray, tokens[1]);
+                }
             }
-            tempArray[tempArray.length-1]=fElement;
+            command = scanner.nextLine();
         }
-        return tempArray;
-
+        System.out.print("[");
+        for (int i = 0; i <= inputAsArray.length - 1; i++) {
+            if (i == inputAsArray.length - 1) {
+                System.out.print(inputAsArray[i]);
+            } else {
+                System.out.print(inputAsArray[i] + ", ");
+            }
+        }
+        System.out.println("]");
     }
 
-    private static int maxOddIndex(int[] inputArray){
 
-        int currentNum=0;
-        int max=Integer.MIN_VALUE;
-        int index=0;
-        for (int i = 0; i < inputArray.length; i++) {
-             currentNum=inputArray[i];
+    private static void findLastOdd(String[] inputAsArray, String token) {
+        int neededCount = Integer.parseInt(token);
+        if (neededCount > inputAsArray.length) {
+            System.out.println("Invalid count");
+        } else {
+            int countEven = 0;
+            for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                    countEven++;
+                }
+            }
+            int[] array = new int[Math.min(countEven, neededCount)];
+            if (array.length > 0) {
+                int index = 0;
+                for (int i = inputAsArray.length - 1; i >= 0; i--) {
+                    if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                        array[index] = Integer.parseInt(inputAsArray[i]);
+                        index++;
+                        if (index > array.length - 1) {
+                            break;
+                        }
+                    }
+                }
+                int[] reversedArray = new int[array.length];
+                for (int i = 0; i <= reversedArray.length - 1; i++) {
+                    reversedArray[i] = array[array.length - (i + 1)];
+                }
 
-            if (currentNum % 2!=0){
-                if (currentNum>max){
-                    max=currentNum;
+                System.out.print("[");
+                for (int i = 0; i <= reversedArray.length - 1; i++) {
+                    if (i == reversedArray.length - 1) {
+                        System.out.print(reversedArray[i]);
+                    } else {
+                        System.out.print(reversedArray[i] + ", ");
+                    }
+                }
+                System.out.println("]");
+            } else {
+                System.out.println("[]");
+            }
+        }
+    }
+
+
+    private static void findLastEven(String[] inputAsArray, String token) {
+        int neededCount = Integer.parseInt(token);
+        if (neededCount > inputAsArray.length) {
+            System.out.println("Invalid count");
+        } else {
+            int countEven = 0;
+            for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                    countEven++;
+                }
+            }
+            int[] array = new int[Math.min(countEven, neededCount)];
+            if (array.length > 0) {
+                int index = 0;
+                for (int i = inputAsArray.length - 1; i >= 0; i--) {
+                    if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                        array[index] = Integer.parseInt(inputAsArray[i]);
+                        index++;
+                        if (index > array.length - 1) {
+                            break;
+                        }
+                    }
+                }
+                int[] reversedArray = new int[array.length];
+                for (int i = 0; i <= reversedArray.length - 1; i++) {
+                    reversedArray[i] = array[array.length - (i + 1)];
+                }
+
+                System.out.print("[");
+                for (int i = 0; i <= reversedArray.length - 1; i++) {
+                    if (i == reversedArray.length - 1) {
+                        System.out.print(reversedArray[i]);
+                    } else {
+                        System.out.print(reversedArray[i] + ", ");
+                    }
+                }
+                System.out.println("]");
+            } else {
+                System.out.println("[]");
+            }
+        }
+    }
+
+
+    private static void findFirstOdd(String[] inputAsArray, String token) {
+        int neededCount = Integer.parseInt(token);
+        if (neededCount > inputAsArray.length) {
+            System.out.println("Invalid count");
+        } else {
+            int countOdd = 0;
+            for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                    countOdd++;
+                }
+            }
+            int[] array = new int[Math.min(countOdd, neededCount)];
+            if (array.length > 0) {
+                int index = 0;
+                for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                    if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                        array[index] = Integer.parseInt(inputAsArray[i]);
+                        index++;
+                        if (index > array.length - 1) {
+                            break;
+                        }
+                    }
+                }
+                System.out.print("[");
+                for (int i = 0; i <= array.length - 1; i++) {
+                    if (i == array.length - 1) {
+                        System.out.print(array[i]);
+                    } else {
+                        System.out.print(array[i] + ", ");
+                    }
+                }
+                System.out.println("]");
+            } else {
+                System.out.println("[]");
+            }
+        }
+    }
+
+
+    private static void findFirstEven(String[] inputAsArray, String token) {
+        int neededCount = Integer.parseInt(token);
+        if (neededCount > inputAsArray.length) {
+            System.out.println("Invalid count");
+        } else {
+            int countEven = 0;
+            for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                    countEven++;
+                }
+            }
+            int[] array = new int[Math.min(countEven, neededCount)];
+            if (array.length > 0) {
+                int index = 0;
+                for (int i = 0; i <= inputAsArray.length - 1; i++) {
+                    if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                        array[index] = Integer.parseInt(inputAsArray[i]);
+                        index++;
+                        if (index > array.length - 1) {
+                            break;
+                        }
+                    }
+                }
+                System.out.print("[");
+                for (int i = 0; i <= array.length - 1; i++) {
+                    if (i == array.length - 1) {
+                        System.out.print(array[i]);
+                    } else {
+                        System.out.print(array[i] + ", ");
+                    }
+                }
+                System.out.println("]");
+            } else {
+                System.out.println("[]");
+            }
+        }
+    }
+
+    private static void getMinOdd(String[] inputAsArray) {
+        int minElement = Integer.MAX_VALUE;
+        int indexOfMinElement = -1;
+        for (int i = 0; i <= inputAsArray.length - 1; i++) {
+            if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                if (Integer.parseInt(inputAsArray[i]) <= minElement) {
+                    minElement = Integer.parseInt(inputAsArray[i]);
+                    indexOfMinElement = i;
                 }
             }
         }
-        for (int j = 0; j < inputArray.length; j++) {
-            if (max==inputArray[j]){
-                index=j;
-            }
+        if (indexOfMinElement > -1) {
+            System.out.println(indexOfMinElement);
+        } else {
+            System.out.println("No matches");
         }
-        return index;
     }
 
-    private static int minOdd(int[] inputArray){
-        int currentNum=0;
-        int min=Integer.MAX_VALUE;
-        int index=0;
-        for (int i = 0; i < inputArray.length; i++) {
-            currentNum=inputArray[i];
-
-            if (currentNum % 2!=0){
-                if (currentNum>min){
-                    min=currentNum;
+    private static void getMinEven(String[] inputAsArray) {
+        int minElement = Integer.MAX_VALUE;
+        int indexOfMinElement = -1;
+        for (int i = 0; i <= inputAsArray.length - 1; i++) {
+            if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                if (Integer.parseInt(inputAsArray[i]) <= minElement) {
+                    minElement = Integer.parseInt(inputAsArray[i]);
+                    indexOfMinElement = i;
                 }
             }
         }
-        for (int j = 0; j < inputArray.length; j++) {
-            if (min==inputArray[j]){
-                index=j;
-            }
+        if (indexOfMinElement > -1) {
+            System.out.println(indexOfMinElement);
+        } else {
+            System.out.println("No matches");
         }
-
-        return index;
     }
 
-    private static int minEven(int[] inputArray){
-        int currentNum=0;
-        int min=Integer.MAX_VALUE;
-        int index=0;
-        for (int i = 0; i < inputArray.length; i++) {
-            currentNum=inputArray[i];
-
-            if (currentNum % 2==0){
-                if (currentNum>min){
-                    min=currentNum;
+    private static void getMaxEven(String[] inputAsArray) {
+        int maxElement = Integer.MIN_VALUE;
+        int indexOfMaxElement = -1;
+        for (int i = 0; i <= inputAsArray.length - 1; i++) {
+            if (Integer.parseInt(inputAsArray[i]) % 2 == 0) {
+                if (Integer.parseInt(inputAsArray[i]) >= maxElement) {
+                    maxElement = Integer.parseInt(inputAsArray[i]);
+                    indexOfMaxElement = i;
                 }
             }
         }
-        for (int j = 0; j < inputArray.length; j++) {
-            if (min==inputArray[j]){
-                index=j;
-            }
+        if (indexOfMaxElement > -1) {
+            System.out.println(indexOfMaxElement);
+        } else {
+            System.out.println("No matches");
         }
-
-        return index;
     }
 
-
-    private static int maxEven(int[] inputArray){
-
-        int currentNum=0;
-        int max=Integer.MIN_VALUE;
-        int index=0;
-        for (int i = 0; i < inputArray.length; i++) {
-            currentNum=inputArray[i];
-
-            if (currentNum % 2==0){
-                if (currentNum>max){
-                    max=currentNum;
+    private static void getMaxOdd(String[] inputAsArray) {
+        int maxElement = Integer.MIN_VALUE;
+        int indexOfMaxElement = -1;
+        for (int i = 0; i <= inputAsArray.length - 1; i++) {
+            if (Integer.parseInt(inputAsArray[i]) % 2 != 0) {
+                if (Integer.parseInt(inputAsArray[i]) >= maxElement) {
+                    maxElement = Integer.parseInt(inputAsArray[i]);
+                    indexOfMaxElement = i;
                 }
             }
         }
-        for (int j = 0; j < inputArray.length; j++) {
-            if (max==inputArray[j]){
-                index=j;
-            }
+        if (indexOfMaxElement > -1) {
+            System.out.println(indexOfMaxElement);
+        } else {
+            System.out.println("No matches");
         }
-        return index;
     }
 
-    private static int[] firstEven(int[] inputArray, int count){
 
-        int currentNum=0;
-        int[] firstCountEvenArr=new int[count];
-
-        for (int i = 0; i <count ; i++) {
-
-            for (int j = i; j < inputArray.length; j++) {
-                currentNum=inputArray[j];
-                if (currentNum % 2==0){
-                    firstCountEvenArr[i]=currentNum;
-                    break;
-                }
-
+    private static String[] getNewArray(String[] inputAsArray, String token) {
+        int index = Integer.parseInt(token);
+        String[] newArray = new String[inputAsArray.length];
+        if (index < 0 || index >= inputAsArray.length) {
+            System.out.println("Invalid index");
+            return inputAsArray;
+        } else {
+            int x = 0;
+            for (int newStart = index + 1; newStart < inputAsArray.length; newStart++) {
+                newArray[x] = inputAsArray[newStart];
+                x++;
             }
-        }
-        return firstCountEvenArr;
-    }
-
-    private static int[] firstOdd(int[] inputArray, int count){
-
-        int currentNum=0;
-        int[] firstCountOddArr=new int[count];
-
-        for (int i = 0; i <count ; i++) {
-
-            for (int j = i; j < inputArray.length; j++) {
-                currentNum=inputArray[j];
-                if (currentNum % 2!=0){
-                    firstCountOddArr[i]=currentNum;
-                    break;
-                }
-
+            for (int newEnd = 0; newEnd <= index; newEnd++) {
+                newArray[x] = inputAsArray[newEnd];
+                x++;
             }
+
         }
-        return firstCountOddArr;
-    }
-
-    private static int[] lastEven(int[] inputArray, int count){
-
-        int currentNum=0;
-        int[] firstCountOddArr=new int[count];
-
-        for (int i = 0; i <count ; i++) {
-
-            for (int j = inputArray.length-i; j>=i; j--) {
-                currentNum=inputArray[j-1];
-                if (currentNum % 2==0){
-                    firstCountOddArr[i]=currentNum;
-                    break;
-                }
-
-            }
-        }
-        //reversing the array
-        int [] tempArray=new int[firstCountOddArr.length];
-        int j = tempArray.length;
-        for (int i = 0; i < tempArray.length; i++) {
-            tempArray[j - 1] = firstCountOddArr[i];
-            j = j - 1;
-        }
-        return tempArray;
-    }
-
-    private static int[] lastOdd(int[] inputArray, int count){
-
-        int currentNum=0;
-        int[] firstCountOddArr=new int[count];
-
-        for (int i = 0; i <count ; i++) {
-
-            for (int j = inputArray.length-i; j>=i; j--) {
-                currentNum=inputArray[j-1];
-                if (currentNum % 2!=0){
-                    firstCountOddArr[i]=currentNum;
-                    break;
-                }
-
-            }
-        }
-        //reversing the array
-        int [] tempArray=new int[firstCountOddArr.length];
-        int j = tempArray.length;
-        for (int i = 0; i < tempArray.length; i++) {
-            tempArray[j - 1] = firstCountOddArr[i];
-            j = j - 1;
-        }
-        return tempArray;
+        return newArray;
     }
 
 
