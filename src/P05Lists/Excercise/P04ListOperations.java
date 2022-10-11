@@ -23,10 +23,15 @@ public class P04ListOperations {
 
                 int number= Integer.parseInt(commandList.get(1));
                 int index= Integer.parseInt(commandList.get(2));
-                inputList.add(index,number);
+                if (index>=0 && index<=inputList.size()-1){
+                    inputList.add(index,number);
+                }else {
+                    System.out.println("Invalid index");
+                }
+
             } else if (commandInput.contains("Remove")) {
                 int index= Integer.parseInt(commandList.get(1));
-                if (index<inputList.size()){
+                if (index>=0 &&  index<=inputList.size()-1){
                     inputList.remove(index);
                 }else {
                     System.out.println("Invalid index");
