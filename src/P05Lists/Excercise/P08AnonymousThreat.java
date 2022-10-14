@@ -69,7 +69,6 @@ public class P08AnonymousThreat {
                     int partSize=element.size()/parts;
 
                     int beginIndexOfInput=0;
-
                     for (int i = 1; i < parts ; i++) {
                         inputList.add(index,elementForDivide.substring(beginIndexOfInput,beginIndexOfInput+partSize));
                         index++;
@@ -77,7 +76,9 @@ public class P08AnonymousThreat {
                     }
                     inputList.add(index,elementForDivide.substring(beginIndexOfInput));
 
+
                 }
+
 
             }
 
