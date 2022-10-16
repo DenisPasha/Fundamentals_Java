@@ -10,133 +10,95 @@ public class P10SoftUniCoursePlanning {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        List<String>inputList= Arrays.stream(scanner.nextLine().split(", ")).collect(Collectors.toList());
-        String command=scanner.nextLine();
+        List<String> schedule = Arrays.stream(scanner.nextLine().split(", ")).collect(Collectors.toList());
 
-        while (!command.equals("course start")){
+        String input = scanner.nextLine();
 
-
-            List<String>commandList= List.of(command.split(":"));
-
-            if (command.contains("Add:")){
-                String object= commandList.get(1);
-
-                boolean alreadyInList=true;
-                for (int i = 0; i < inputList.size(); i++) {
-                    String currentElement=inputList.get(i);
-
-                    if (currentElement.equals(object)){
-                        alreadyInList=false;
+        while(!input.equals("course start")) {
+            String [] tokens = input.split(":");
+            String command = tokens[0];
+            String lessonTitle = tokens[1];
+            switch(command) {
+                case "Add":
+                    //"Add:Databases" -> ["Add", "Databases"]
+                    if(!schedule.contains(lessonTitle)) {
+                        schedule.add(lessonTitle);
                     }
-                }
-                if (alreadyInList){
-                    inputList.add(object);
-                }
-
-            } else if (command.contains("Insert:")) {
-
-                boolean notInList=true;
-                int index= Integer.parseInt(commandList.get(2));
-
-                for (int i = 0; i < inputList.size(); i++) {
-                    String currentElement=inputList.get(i);
-
-                    if (currentElement.equals(commandList.get(1))){
-                        notInList=false;
+                    break;
+                case "Insert":
+                    //Insert:Arrays:0 -> ["Insert", "Arrays", "0"]
+                    int index = Integer.parseInt(tokens[2]);
+                    if(!schedule.contains(lessonTitle)) {
+                        schedule.add(index, lessonTitle);
                     }
-                }
-                if (notInList){
-                    inputList.add(index,commandList.get(1));
-                }
+                    break;
+                case "Remove":
+                    if(schedule.contains(lessonTitle)) {
+                        schedule.remove(lessonTitle);
+                    }
+                    int indexLesson = schedule.indexOf(lessonTitle);
+                    if(schedule.get(indexLesson + 1).equals(lessonTitle+"-Exercise")) {
+                        schedule.remove(indexLesson + 1);
+                    }
+                    break;
+                case "Swap":
+                    //Arrays, Lists, Methods, Databases, Databases-Exercise
+                    //Swap:Lists:Databases
+                    String lessonTitle2 = input.split(":")[2];
+                    if (schedule.contains(lessonTitle) && schedule.contains(lessonTitle2)) {
+                        int lesson1Index = schedule.indexOf(lessonTitle);
+                        int lesson2Index = schedule.indexOf(lessonTitle2);
+                        schedule.set(lesson1Index, lessonTitle2);
+                        schedule.set(lesson2Index, lessonTitle);
 
-
-            } else if (command.contains("Remove:")) {
-                String object= commandList.get(1);
-
-                for (int i = 0; i < inputList.size(); i++) {
-                    String currentElement=inputList.get(i);
-                    if (object.equals(currentElement)){
-                        inputList.remove(i);
-                        for (int j = i+1; j < inputList.size(); j++) {
-                            String currentElement2=inputList.get(j);
-                            if (currentElement2.equals(object+"-Exercise")){
-                                inputList.remove(j);
-                            }
+                        String exOne = lessonTitle + "-Exercise";
+                        String exTwo = lessonTitle2 + "-Exercise";
+                        if (schedule.contains(exOne)) {
+                            schedule.remove(schedule.indexOf(exOne));
+                            schedule.add(schedule.indexOf(lessonTitle + 1), exOne);
+                        }
+                        if (schedule.contains(exTwo)) {
+                            schedule.remove(schedule.indexOf(exTwo));
+                            schedule.add(schedule.indexOf(lessonTitle2) + 1, exTwo);
                         }
                     }
-
-                }
-
-
-            } else if (command.contains("Swap:")) {
-                String element1= commandList.get(1);
-                String element2= commandList.get(2);
-
-                for (int i = 0; i < inputList.size(); i++) {
-
-                    String currentElement=inputList.get(i);
-
-                    if (currentElement.equals(element1)){
-
-                        for (int j = i+1; j < inputList.size(); j++) {
-                            String currentElement2=inputList.get(j);
-                            if (element2.equals(currentElement2)){
-
-                                inputList.set(i,element2);
-                                inputList.set(j,element1);
-
-                                for (int k = i+2; k < inputList.size(); k++) {
-                                    String element=inputList.get(k);
-                                    if (element.equals(element2+"-Exercise")){
-                                        inputList.add(i+1,element);
-                                        inputList.remove(k+1);
-                                        break;
-                                    } else if (element.equals(element1+"-Exercise")){
-                                        inputList.add(j+1,element);
-                                        inputList.remove(k+1);
-                                        break;
-                                    }
-                                }
-
-                            }
+                    break;
+                case "Exercise":
+                    //упражнение -> Objects-Exercise
+                    //[Data Types, Objects, Lists]
+                    String exercise = lessonTitle + "-Exercise";
+                    //слагаме упражнение ако има лекция и го няма
+                    int indexLessonTitle = schedule.indexOf(lessonTitle);
+                    if(schedule.contains(lessonTitle)) {
+                        //има ли упражнение
+                        if(indexLessonTitle == schedule.size() - 1) {
+                            schedule.add(indexLessonTitle + 1, exercise);
+                        } else  if(!schedule.get(indexLessonTitle + 1).equals(exercise)) {
+                            schedule.add(indexLessonTitle + 1, exercise);
                         }
+                    } else {
+                        schedule.add(lessonTitle);
+                        schedule.add(exercise);
                     }
-                }
-            } else if (command.contains("Exercise:")) {
-                String lessonTitle= commandList.get(1);
-
-                boolean lessonExist=false;
-                int index=0;
-
-                for (int i = 0; i < inputList.size(); i++) {
-                    String currentElement=inputList.get(i);
-
-                    if (currentElement.equals(lessonTitle)){
-                        lessonExist=true;
-                        index=i;
-
-                    }
-
-                }
-                if (lessonExist){
-                    String concatExercise=lessonTitle+"-Exercise";
-                    inputList.set(index,concatExercise);
-                }else {
-                    inputList.add(lessonTitle);
-                    String concatExercise=lessonTitle+"-Exercise";
-                    inputList.add(concatExercise);
-                }
-
+                    break;
             }
 
 
-            command=scanner.nextLine();
+
+
+
+            input = scanner.nextLine();
         }
 
-        for (int i = 0; i < inputList.size(); i++) {
-            System.out.println(i+1+"."+inputList.get(i));
+        printList(schedule);
+    }
+
+    private static void printList(List<String> elements) {
+        int count = 1;
+        for (String element : elements) {
+            System.out.println(count + "." + element);
+            count++;
+
         }
-
-
     }
 }

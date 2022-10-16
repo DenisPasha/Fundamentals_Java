@@ -11,81 +11,79 @@ public class P08AnonymousThreat {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        List<String> texts = Arrays.stream(scanner.nextLine() //"Ivo Johny Tony Bony Mony"
+                        .split(" ")) //["Ivo", "Johny", "Tony", "Bony", "Mony"]
+                .collect(Collectors.toList()); //{"Ivo", "Johny", "Tony", "Bony", "Mony"}
 
-        List<String>inputList= Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
+        String command = scanner.nextLine();
 
-        String command=scanner.nextLine();
-
-
-
-
-
-        while (!command.contains("3:1")){
-
-            List<String>commandList= List.of(command.split(" "));
-
-            if (command.contains("merge")){
-                int startIndex= Integer.parseInt(commandList.get(1));
-                int endIndex= Integer.parseInt(commandList.get(2));
-
-                if (startIndex<0){
-                    startIndex=0;
+        while (!command.equals("3:1")) {
+            //1. merge {startIndex} {endIndex}
+            //2. divide {index} {partitions}
+            if (command.contains("merge")) {
+                //command = "merge 1 3".split(" ") -> ["merge", "1", "3"]
+                int startIndex = Integer.parseInt(command.split(" ")[1]);
+                int endIndex = Integer.parseInt(command.split(" ")[2]);
+                //{"Ivo", "Johny", "Tony", "Bony", "Mony"}
+                //проверка за start index
+                if (startIndex < 0) {
+                    startIndex = 0;
                 }
-                if (endIndex>inputList.size()-1){
-                    endIndex=inputList.size()-1;
-                }
-
-                boolean isValidIndex=false;
-                if (startIndex<= inputList.size()-1 && endIndex>=0 ){
-                    isValidIndex=true;
+                //проверка за end index
+                if (endIndex > texts.size() - 1) {
+                    endIndex = texts.size() - 1;
                 }
 
-                if (isValidIndex){
-                    String concat="";
+                //валидираме индексите -> [0, дълж - 1]
+                boolean isValidIndexes =  startIndex <= texts.size() - 1 && endIndex >= 0 && startIndex < endIndex;
 
-                    for (int i = startIndex; i <= endIndex; i++) {
-                        String currentElement=inputList.get(i);
-                        concat=concat+currentElement;
-
+                if (isValidIndexes) {
+                    //{"Ivo", "Johny", "Tony", "Bony", "Mony"}
+                    //merge 1 3
+                    String resultMerge = "";
+                    for (int index = startIndex; index <= endIndex; index++) {
+                        String currentText = texts.get(index);
+                        resultMerge += currentText;
                     }
-                    for (int i = startIndex; i <=endIndex ; i++) {
-                        inputList.remove(startIndex);
+                    //resultMerge = "JohnyTonyBony"
+                    //remove
+                    for (int index = startIndex; index <= endIndex; index++) {
+                        texts.remove(startIndex);
                     }
-                    inputList.add(startIndex,concat);
+                    //{"Ivo", "Mony"}
+                    texts.add(startIndex,resultMerge);
+                    //{"Ivo", "JohnyTonyBony", "Mony"}
                 }
-
-
             } else if (command.contains("divide")) {
+                //command = "divide 0 3".split(" ") -> ["divide", "2", "3"]
+                int index = Integer.parseInt(command.split(" ")[1]);
+                int parts = Integer.parseInt(command.split(" ")[2]); //брой на частите
+                //{abcdef, ghi, jkl}
+                String elementForDivide = texts.get(index); //"abcdef"
+                texts.remove(index);
+                //{ghi, jkl}
 
-                int index= Integer.parseInt(commandList.get(1));
-                int parts= Integer.parseInt(commandList.get(2));
+                //колко елемента ще има всяка една част
+                int partSize = elementForDivide.length() / parts; //2 елемента във всяка част
 
-                String elementForDivide=inputList.get(index);
-                List<String>element= List.of(elementForDivide.split(""));
-
-                if (parts<element.size()){
-
-                    inputList.remove(index);
-                    int partSize=element.size()/parts;
-
-                    int beginIndexOfInput=0;
-                    for (int i = 1; i < parts ; i++) {
-                        inputList.add(index,elementForDivide.substring(beginIndexOfInput,beginIndexOfInput+partSize));
-                        index++;
-                        beginIndexOfInput+=partSize;
-                    }
-                    inputList.add(index,elementForDivide.substring(beginIndexOfInput));
-
-
+                int beginIndexOfText = 0;
+                for (int part = 1; part < parts; part++) {
+                    texts.add(index, elementForDivide.substring(beginIndexOfText, beginIndexOfText + partSize));
+                    //{ab, cd, ghi, jkl}
+                    index++; // 2
+                    beginIndexOfText += partSize; // 4
                 }
-
-
+                //добавяме останалите символи към последната част
+                texts.add(index, elementForDivide.substring(beginIndexOfText)); //не зададем краен индекс -> взима до последния
             }
+            command = scanner.nextLine();
+        }
 
-            command=scanner.nextLine();
-        }
-        for (String item:inputList) {
-            System.out.print(item+" ");
-        }
+        //!!! печатаме списък с текстове !!!
+        System.out.println(String.join(" ", texts));
+
+       /* for (String text : texts) {
+            System.out.print(text + " ");
+        }*/
     }
 }
