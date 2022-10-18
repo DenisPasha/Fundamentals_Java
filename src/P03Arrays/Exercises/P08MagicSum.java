@@ -7,26 +7,23 @@ public class P08MagicSum {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int[] inputArr= Arrays
-                .stream(scanner.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[]inputArr=Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt).toArray();
 
-        int num=Integer.parseInt(scanner.nextLine());
+        int number=Integer.parseInt(scanner.nextLine());
 
-        for (int i = 0; i < inputArr.length; i++) {
-
+        for (int i = 0; i < inputArr.length-1; i++) {
             int currentNum=inputArr[i];
 
             for (int j = i; j < inputArr.length; j++) {
+                int current=inputArr[j];
+                if (currentNum+current==number){
+                    System.out.println(currentNum+" "+current);
 
-                if (currentNum+inputArr[j]==num){
-                    System.out.print(currentNum+" "+inputArr[j]);
-                    System.out.println();
                 }
             }
-
         }
+
 
     }
 }

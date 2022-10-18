@@ -8,28 +8,30 @@ public class P07MaxSequenceofEqualElements {
 
         Scanner scanner = new Scanner(System.in);
 
+
         int[]nums= Arrays.stream(scanner.nextLine().split(" ")).mapToInt(value -> Integer.parseInt(value)).toArray();
+        int counter = 1;
+        int theMost = 0;
+        int element = 0;
 
-        int counter=1;
-        int lastCounter=0;
-       int sequenceNum=0;
-        for (int i = 0; i < nums.length-1; i++) {
-
-            if (nums[i]==nums[i+1]){
+        for (int i = 0 ; i < nums.length - 1; i++)
+        {
+            if (nums[i] == nums[i + 1]) {
                 counter++;
-            }else {
-                counter=1;
+            } else {
+                counter = 1;
             }
-            if (counter>lastCounter){
-                lastCounter=counter;
-                sequenceNum=nums[i];
+            if (counter > theMost)
+            {
+                theMost = counter;
+                element = nums[i];
             }
+        }
+        for (int j = 1; j <= theMost; j++)
+        {
+            System.out.print(element+" ");
 
         }
-        for (int j=1;j<=lastCounter;j++){
-            System.out.print(sequenceNum+" ");
-        }
-
 
     }
 }
