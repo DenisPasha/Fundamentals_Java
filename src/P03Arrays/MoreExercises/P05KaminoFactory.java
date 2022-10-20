@@ -7,7 +7,6 @@ public class P05KaminoFactory {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-
         int length=Integer.parseInt(scan.nextLine());
         String input=scan.nextLine();
 
@@ -19,10 +18,11 @@ public class P05KaminoFactory {
         int[] dnaSequence=new int[length];
 
         while (!input.equals("Clone them!")){
-            int [] arr = Arrays.stream(input.split("!+")).mapToInt(Integer::parseInt).toArray();
+            int [] arr = Arrays.stream(input.split("!")).mapToInt(Integer::parseInt).toArray();
             int sum=0;
             int index=length;
             count++;
+
             for(int i=0; i<arr.length; i++){
                 if((i!=arr.length-1)&&arr[i]==1&&arr[i+1]==1&&index==length){
                     index=i;

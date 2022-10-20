@@ -44,7 +44,7 @@ public class P10TreasureHunt {
                             treasureChest[i] = treasureChest[i + 1];
                         }
                         treasureChest[treasureChest.length - 1] = dropItem;
-//
+
                     } else {
                         break;
                     }
