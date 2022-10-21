@@ -37,7 +37,10 @@ public class P02TheLift {
             int currentWagon=wagonArr[i];
 
             for (int j = 1; j <=currentWagon ; j++) {
-                emptySpots++;
+                if(currentWagon!=4){
+                    emptySpots++;
+                }
+
             }
         }
         

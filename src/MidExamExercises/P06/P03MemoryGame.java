@@ -22,11 +22,15 @@ public class P03MemoryGame {
             moves++;
 
             List<String>commandList= List.of(command.split(" "));
+
+            String index1String=commandList.get(0);
+            String index2String=commandList.get(1);
+
             int index1= Integer.parseInt(commandList.get(0));
             int index2= Integer.parseInt(commandList.get(1));
 
             //checking if indexes are in bounds and valid
-            if (index1 >=0 && index1 <inputList.size() && index2 >=0 && index2 <= inputList.size() && index1!=index2){
+            if (index1 >=0 && index1 <inputList.size() && index2 >=0 && index2 <= inputList.size()-1 && index1!=index2){
                 //if elements are same
                 if (inputList.get(index1).equals(inputList.get(index2))){
                     String element=inputList.get(index1);
