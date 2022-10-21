@@ -9,61 +9,64 @@ public class P03HeartDelivery {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int[] array =Arrays.stream(scanner.nextLine().split("@")).mapToInt(Integer::parseInt).toArray();
-        String[] command=scanner.nextLine().split(" ");
 
+        List<Integer>inputList=Arrays.stream(scanner.nextLine().split("@"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
 
-        int lastPosition = 0;
-        int successMision = 0;
+        String command=scanner.nextLine();
 
-        while (!command[0].equals("Love!")) {
+        int allJumpsLength=0;
+        while (!command.contains("Love!")){
 
-            int jumpLength = Integer.parseInt(command[1]);
-            lastPosition += jumpLength;
+            List<String>commandList= List.of(command.split(" "));
+            int currentJumpLength= Integer.parseInt(commandList.get(1));
 
-            if (lastPosition < 0 || lastPosition >= array.length)
-            {
-                lastPosition = 0;
+            allJumpsLength=allJumpsLength+currentJumpLength;
+
+            if (allJumpsLength >= inputList.size()){
+                allJumpsLength=0;
             }
 
-            if (array[lastPosition] != 0)
-            {
-                array[lastPosition] -= 2;
+            int currentHouse = inputList.get(allJumpsLength);
 
-                if (array[lastPosition] == 0)
-                {
-                    successMision++;
-                    System.out.printf("Place %d has Valentine's day.",lastPosition);
+            if (currentHouse <=0){
+                System.out.printf("Place %d already had Valentine's day.",allJumpsLength);
+                System.out.println();
+            }else {
+                currentHouse=currentHouse-2;
+                if (currentHouse <=0){
+                    System.out.printf("Place %d has Valentine's day.",allJumpsLength);
                     System.out.println();
-
                 }
             }
-            else
-            {
-                System.out.printf("Place %d already had Valentine's day.",lastPosition);
-                System.out.println();
 
-            }
 
-            command=scanner.nextLine().split(" ");
 
+            inputList.set(allJumpsLength,currentHouse);
+
+
+
+            command=scanner.nextLine();
         }
 
-        System.out.printf("Cupid's last position was %d.",lastPosition);
+        System.out.printf("Cupid's last position was %d.",allJumpsLength);
         System.out.println();
 
-
-        if (successMision == array.length)
-        {
-            System.out.println("Mission was successful.");
-
+        boolean notSuccesfull=false;
+        int count=0;
+        for (int i = 0; i < inputList.size(); i++) {
+            int currentHouse= inputList.get(i);
+            if (currentHouse!=0){
+                count++;
+                notSuccesfull=true;
+            }
         }
-        else
-        {
-            System.out.printf("Cupid has failed %d places.",successMision);
 
+        if (notSuccesfull){
+            System.out.printf("Cupid has failed %d places.",count);
+        }else {
+            System.out.println("Mission was successful.");
         }
     }
-
-
 }

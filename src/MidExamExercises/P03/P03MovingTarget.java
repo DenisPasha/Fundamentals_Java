@@ -42,7 +42,7 @@ public class P03MovingTarget {
                 int index= Integer.parseInt(commandList.get(1));
                 int value= Integer.parseInt(commandList.get(2));
 
-                if (index > 0 && index< inputList.size()){
+                if (index >= 0 && index< inputList.size()){
                     inputList.set(index,value);
                 }else {
                     System.out.println("Invalid placement!");
@@ -52,13 +52,12 @@ public class P03MovingTarget {
                 int index= Integer.parseInt(commandList.get(1));
                 int radius= Integer.parseInt(commandList.get(2));
 
-                if (index-radius > 0 && index+radius <inputList.size()){
+                if (index-radius >= 0 && index+radius < inputList.size()){
 
-                    for (int i = index; i <=radius ; i++) {
+                    for (int i = index-radius; i <=index+radius ; i++) {
                         inputList.remove(i);
-                    }
-                    for (int i = index+1; i >=radius ; i--) {
-                        inputList.remove(i);
+                        index-=1;
+                        i--;
                     }
 
 
