@@ -10,13 +10,13 @@ public class P01BonusScoringSystem {
         int numOfLecturers=Integer.parseInt(scanner.nextLine());
         int additionalBonus=Integer.parseInt(scanner.nextLine());
 
-        double maxBonus=Double.MIN_VALUE;
-        int  maxAttendances=Integer.MIN_VALUE;
+        double maxBonus=0;
+        int  maxAttendances=0;
 
         for (int i = 1; i <=numberOfStudent ; i++) {
             int attendances =Integer.parseInt(scanner.nextLine());
             //{total bonus} = {student attendances} / {course lectures} * (5 + {additional bonus})
-            double totalBonus=attendances*1.0 / numOfLecturers * (5 + additionalBonus);
+            double totalBonus=1.0*attendances / numOfLecturers * (5 + additionalBonus);
 
             if (totalBonus > maxBonus){
                 maxBonus = totalBonus;
@@ -27,9 +27,9 @@ public class P01BonusScoringSystem {
 
 
         }
-        double maxBonusi=Math.round(maxBonus);
-        int finalBonus= (int) maxBonusi;
-        System.out.printf("Max Bonus: %d.",finalBonus);
+        double maxBonusi=Math.ceil(maxBonus);
+        double finalBonus=maxBonusi;
+        System.out.printf("Max Bonus: %.0f.",finalBonus);
         System.out.println();
         System.out.printf("The student has attended %d lectures.",maxAttendances);
     }

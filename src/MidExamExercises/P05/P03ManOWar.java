@@ -84,9 +84,12 @@ public class P03ManOWar {
                 if (index >=0 && index < pirateShipList.size()){
                     //updating a section health
                     int currentSection=pirateShipList.get(index);
-                    if (currentSection + health < maxHealthOfEachIndex){
+                    if (currentSection + health <= maxHealthOfEachIndex){
                         currentSection = currentSection+health;
                         pirateShipList.set(index,currentSection);
+                    }else {
+                        currentSection = maxHealthOfEachIndex;
+
                     }
                 }
 
@@ -96,7 +99,7 @@ public class P03ManOWar {
                 for (int i = 0; i < pirateShipList.size(); i++) {
                     int currentSection= pirateShipList.get(i);
 
-                    double percent=currentSection*1.0 / maxHealthOfEachIndex *100;
+                    double percent=(currentSection*1.0 / maxHealthOfEachIndex) *100;
                     if (percent < 20.00){
                         needRepairCount++;
                     }
