@@ -6,26 +6,27 @@ public class P02WordSynonyms {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-
         int n=Integer.parseInt(scanner.nextLine());
-        Map<String,List<String>>wordMap=new LinkedHashMap<>();
 
+        Map<String,List<String>>synonymsMap=new LinkedHashMap<>();
+        List<String>synonymList ;
 
         for (int i = 1; i <=n ; i++) {
 
             String word=scanner.nextLine();
             String synonym=scanner.nextLine();
 
-            wordMap.putIfAbsent(word, new ArrayList<>());
-            wordMap.get(word).add(synonym);
-        }
+            synonymsMap.putIfAbsent(word,new ArrayList<>());
+            synonymsMap.get(word).add(synonym);
 
-        for (Map.Entry<String, List<String>> entry : wordMap.entrySet()) {
 
-            System.out.printf("%s - %s%n",entry.getKey(),String.join(", ",entry.getValue()));
 
         }
 
+        for (Map.Entry<String, List<String>> entry : synonymsMap.entrySet()) {
+
+            System.out.printf("%s - %s %n",entry.getKey(),String.join(", ", entry.getValue()));
+        }
 
     }
 }
