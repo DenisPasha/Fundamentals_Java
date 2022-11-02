@@ -1,34 +1,29 @@
 package P07AssociativeArrays;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class P01CountRealNumbers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        double []inputArr= Arrays.stream(scanner.nextLine().split(" ")).mapToDouble(Double::parseDouble).toArray();
-        Map<Double,Integer>numbersMap=new TreeMap<>();
 
-        for (int i = 0; i < inputArr.length; i++) {
-            double currentNum=inputArr[i];
+        List<Double>inputList=Arrays.stream(scanner.nextLine().split(" ")).map(Double::parseDouble).collect(Collectors.toList());
+        Map<Double,Integer>numsMap=new TreeMap<>();
 
-            if (!numbersMap.containsKey(currentNum)){
-                numbersMap.put(currentNum,1);
-            }else {
-                numbersMap.put(currentNum,numbersMap.get(currentNum)+1);
-            }
+        for (int i = 0; i < inputList.size(); i++) {
+            double currentNum=inputList.get(i);
+
+            numsMap.putIfAbsent(currentNum,0);
+            numsMap.put(currentNum,numsMap.get(currentNum)+1);
+
 
         }
 
-        for (Map.Entry<Double, Integer> entry : numbersMap.entrySet()) {
-            System.out.printf("%.0f -> %d",entry.getKey(), entry.getValue());
-            System.out.println();
+        for (Map.Entry<Double, Integer> entry : numsMap.entrySet()) {
+            System.out.printf("%.0f -> %d%n",entry.getKey(),entry.getValue());
         }
-
 
     }
 }
