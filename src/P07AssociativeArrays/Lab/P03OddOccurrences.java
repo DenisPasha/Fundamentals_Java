@@ -1,4 +1,4 @@
-package P07AssociativeArrays;
+package P07AssociativeArrays.Lab;
 
 import java.util.*;
 import java.util.stream.Collectors;
