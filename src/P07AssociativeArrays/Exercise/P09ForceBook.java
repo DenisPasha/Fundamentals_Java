@@ -14,7 +14,7 @@ public class P09ForceBook {
 
             if (command.contains("|")){
 
-                String side=command.split(" | ")[0];
+                String side=command.split(" \\| ")[0];
                 String user=command.split(" \\| ")[1];
 
                map.putIfAbsent(side,new ArrayList<>());
@@ -39,21 +39,12 @@ public class P09ForceBook {
                 }
 
                 //adding to corresponding side
-                boolean noSuchSide=true;
-
 
                 map.putIfAbsent(side,new ArrayList<>());
                 map.get(side).add(user);
-                System.out.printf("%s joins the %s side!",user,side);
-
-                System.out.println();
-
-
-
+                System.out.printf("%s joins the %s side!%n",user,side);
 
             }
-
-
             command=scanner.nextLine();
         }
 
