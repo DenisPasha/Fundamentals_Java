@@ -14,7 +14,6 @@ public class P02CharacterMultiplier {
         String shortestString=shortestString(one,two);
         String longestString=longestString(one,two);
 
-
         double sum=0;
         for (int i = 0; i < shortestString.length(); i++) {
             char currentChar=shortestString.charAt(i);
