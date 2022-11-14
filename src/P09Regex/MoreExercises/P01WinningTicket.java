@@ -18,12 +18,12 @@ public class P01WinningTicket {
             if (currentTicket.length()==20){
 
                 StringBuilder firstHalfTicket=new StringBuilder();
-                for (int j = 0; j < currentTicket.length()/2 ; j++) {
+                for (int j = 0; j <=currentTicket.length()/2 ; j++) {
                     firstHalfTicket.append(currentTicket.charAt(j));
                 }
 
                 StringBuilder secondHalfTicket=new StringBuilder();
-                for (int j = currentTicket.length()/2-1; j < currentTicket.length(); j++) {
+                for (int j = currentTicket.length()-1/2; j < currentTicket.length(); j++) {
                     secondHalfTicket.append(currentTicket.charAt(j));
                 }
 
