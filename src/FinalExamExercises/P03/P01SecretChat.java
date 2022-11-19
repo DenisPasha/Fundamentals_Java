@@ -24,10 +24,9 @@ public class P01SecretChat {
 
                if (index!=-1){
                    String exported=input.substring(index,index+text.length());
-
                    StringBuilder temp=new StringBuilder();
-                   for (int i = exported.length()-1; i >=0 ; i--) {
 
+                   for (int i = exported.length()-1; i >=0 ; i--) {
                        temp.append(exported.charAt(i));
                    }
 
