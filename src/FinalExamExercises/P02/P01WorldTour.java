@@ -6,52 +6,48 @@ public class P01WorldTour {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        StringBuilder input=new StringBuilder(scanner.nextLine());
-
-
+        String stops=scanner.nextLine();
+        StringBuilder sb=new StringBuilder(stops);
         String command=scanner.nextLine();
-
         while (!command.equals("Travel")){
-
             String[] commandArr=command.split(":");
 
-            if (command.contains("Add Stop")){
-                int index= Integer.parseInt(commandArr[1]);
-                String text=commandArr[2];
+            if (commandArr[0].equals("Add Stop")){
+                int index = Integer.parseInt(commandArr[1]);
+                String destination = commandArr[2];
 
-                if (index>=0 && index<input.length()){
-                    input.insert(index,text);
-                    System.out.println(input);
+                if (index >=0 && index < sb.length()){
+                    sb.insert(index,destination);
+
                 }
+                System.out.println(sb);
 
-            } else if (command.contains("Remove Stop")) {
+            } else if (commandArr[0].equals("Remove Stop")) {
+                int startIndex = Integer.parseInt(commandArr[1]);
+                int endIndex = Integer.parseInt(commandArr[2]);
 
-                int startIndex= Integer.parseInt(commandArr[1]);
-                int endIndex= Integer.parseInt(commandArr[2]);
+                if (startIndex >=0  && endIndex < sb.length()){
+                    sb.replace(startIndex,endIndex+1,"");
 
-                String toRemove=input.substring(startIndex,endIndex+1);
-
-                if (startIndex>=0 && startIndex<input.length() && endIndex+1>startIndex && endIndex+1<input.length()){
-                    input.replace(startIndex,endIndex+1,"");
-                    System.out.println(input);
                 }
+                System.out.println(sb);
 
-            } else if (command.contains("Switch")) {
+            }else if (commandArr[0].equals("Switch")){
+                String oldDestination=commandArr[1];
+                String newDestination=commandArr[2];
 
-                String old=commandArr[1];
-                String newOne=commandArr[2];
+                String dest=sb.toString();
+               //dest=dest.replaceFirst(oldDestination,newDestination);
+             dest = dest.replaceAll(oldDestination,newDestination);
+               sb.replace(0,sb.length(),dest);
 
-               int startIndex = input.indexOf(old);
-               int endIndex = startIndex+old.length();
-
-               input.replace(startIndex,endIndex,newOne);
-                System.out.println(input);
+                System.out.println(sb);
             }
 
 
             command=scanner.nextLine();
         }
+        System.out.printf("Ready for world tour! Planned stops: %s",sb);
 
-        System.out.printf("Ready for world tour! Planned stops: %s",input);
     }
 }
