@@ -12,30 +12,21 @@ public class P02DestinationMapper {
         Scanner scanner = new Scanner(System.in);
 
         String input=scanner.nextLine();
-        List<String>destinationsList=new ArrayList<>();
-
-        String regex="([=\\/])(?<destination>[A-Z][A-Za-z]{2,})\\1";
+        String regex="([=|\\/])(?<destination>[A-Z][A-Za-z]{2,})\\1";
         Pattern pattern= Pattern.compile(regex);
-        Matcher matcher=pattern.matcher(input);
+        Matcher matcher= pattern.matcher(input);
 
+        ArrayList<String>destinationList=new ArrayList<>();
         while (matcher.find()){
-            destinationsList.add(matcher.group("destination"));
+            destinationList.add(matcher.group("destination"));
         }
 
-
-        int points= destinationsList.stream()
-                .mapToInt(String::length)
-                .sum();
-
-        if (destinationsList.size()>0){
-            System.out.print("Destinations: ");
-            System.out.println(String.join(", ",destinationsList));
-            System.out.println();
-            System.out.printf("Travel Points: %d",points);
-        }else {
-            System.out.print("Destinations:");
-            System.out.println();
-            System.out.printf("Travel Points: %d",points);
+        int sum = 0;
+        for (int i = 0; i < destinationList.size(); i++) {
+            String currentDestination = destinationList.get(i);
+            sum+=currentDestination.length();
         }
+        System.out.printf("Destinations: %s%n",String.join(", ",destinationList));
+        System.out.printf("Travel Points: %d",sum);
     }
 }
