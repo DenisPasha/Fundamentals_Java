@@ -6,56 +6,58 @@ public class P01SecretChat {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        StringBuilder input=new StringBuilder(scanner.nextLine());
-
+        String input = scanner.nextLine();
         String command=scanner.nextLine();
+        StringBuilder sb=new StringBuilder(input);
 
-        while (!command.contains("Reveal")){
-            String[]commandArr=command.split(":\\|:");
+        while (!command.equals("Reveal")){
 
-            if (command.contains("InsertSpace")){
-                int index= Integer.parseInt(commandArr[1]);
-                input.insert(index," ");
-                System.out.println(input);
 
-            } else if (command.contains("Reverse")) {
-                String text= commandArr[1];
-               int index = input.indexOf(text);
+            String[] commandArr=command.split(":\\|:");
 
-               if (index!=-1){
-                   String exported=input.substring(index,index+text.length());
-                   StringBuilder temp=new StringBuilder();
+            if (commandArr[0].equals("InsertSpace")){
 
-                   for (int i = exported.length()-1; i >=0 ; i--) {
-                       temp.append(exported.charAt(i));
+                int index = Integer.parseInt(commandArr[1]);
+                sb.insert(index," ");
+                System.out.println(sb);
+
+            } else if (commandArr[0].equals("Reverse")) {
+
+                String substring = commandArr[1];
+               int startIndex = sb.indexOf(substring);
+               int endIndex = substring.length() + startIndex;
+
+
+               if (startIndex >= 0){
+                   sb.replace(startIndex,endIndex,"");
+
+                   StringBuilder newString = new StringBuilder();
+                   for (int i = substring.length()-1; i >=0; i--) {
+                       char current = substring.charAt(i);
+                       newString.append(current);
                    }
-
-                   for (int i = 0; i <temp.length() ; i++) {
-                       input.replace(index,index+i,"");
-                   }
-                   input.append(temp);
-
-                   System.out.println(input);
-
+                   sb.append(newString);
+                   System.out.println(sb);
                }else {
                    System.out.println("error");
                }
 
 
-                
-            } else if (command.contains("ChangeAll")) {
-                String sub= commandArr[1];
-                String replacement= commandArr[2];
 
-                String temp= String.valueOf(input);
-                temp=temp.replaceAll(sub,replacement);
-                input.replace(0,input.length(),temp);
-                System.out.println(input);
+            } else if (commandArr[0].equals("ChangeAll")) {
+                String toReplace = commandArr[1];
+                String replacement = commandArr[2];
+
+                String text = sb.toString();
+                text = text.replaceAll(toReplace,replacement);
+                sb.replace(0,sb.length(),text);
+                System.out.println(sb);
             }
-
 
             command=scanner.nextLine();
         }
-        System.out.printf("You have a new text message: %s",input);
+
+        System.out.printf("You have a new text message: %s",sb);
+
     }
 }
