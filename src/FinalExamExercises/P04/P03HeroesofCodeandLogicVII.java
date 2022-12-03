@@ -6,118 +6,127 @@ public class P03HeroesofCodeandLogicVII {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int n=Integer.parseInt(scanner.nextLine());
-        Map<String, List<Integer>>map=new LinkedHashMap<>();
+        int n =Integer.parseInt(scanner.nextLine());
+        Map<String,List<Integer>>map= new LinkedHashMap<>();
 
         for (int i = 1; i <=n ; i++) {
+            String[] inputArr=scanner.nextLine().split(" ");
+            String heroName = inputArr[0];
+            int hitPoints = Integer.parseInt(inputArr[1]);
+            int manaPoints = Integer.parseInt(inputArr[2]);
 
-            String input=scanner.nextLine();
-            String[] inputArr=input.split(" ");
+            map.putIfAbsent(heroName,new ArrayList<>());
+            int hp = 0;
+            if (!map.get(heroName).isEmpty()){
+                 hp = map.get(heroName).get(0);
+            }
 
-            String hero=inputArr[0];
-            int hp= Integer.parseInt(inputArr[1]);
-            int mp= Integer.parseInt(inputArr[2]);
+            if (hp+hitPoints <= 100 ){
+                map.get(heroName).add(0,hitPoints);
+            }else {
+                map.get(heroName).add(0,100);
+            }
 
-            map.put(hero,new ArrayList<>());
-            map.get(hero).add(hp);
-            map.get(hero).add(mp);
+            int mp = 0;
+            if (map.get(heroName).size() > 1){
+                mp = map.get(heroName).get(1);
+            }
+
+            if (mp+manaPoints <= 200 ){
+                map.get(heroName).add(1,manaPoints);
+            }else {
+                map.get(heroName).add(1,200);
+            }
 
         }
+        System.out.println();
+        String comands=scanner.nextLine();
 
-        String command=scanner.nextLine();
-        while (!command.contains("End")){
+        String[] commandArr=comands.split(" - ");
+        while (!commandArr[0].equals("End")){
 
-            if (command.contains("CastSpell")){
+            String command = commandArr[0];
+            if (command.equals("CastSpell")){
+                String heroName = commandArr[1];
+                int mpNeeded= Integer.parseInt(commandArr[2]);
+                String spell=commandArr[3];
 
-                String[]commandArr=command.split(" - ");
-
-                String heroName=commandArr[1];
-                int  MPneeded= Integer.parseInt(commandArr[2]);
-                String spellName=commandArr[3];
-
-               if(map.get(heroName).get(1) > MPneeded){
-                   map.get(heroName).set(1,map.get(heroName).get(1) - MPneeded);
-                   System.out.printf("%s has successfully cast %s and now has %d MP!%n",heroName,spellName,map.get(heroName).get(1));
-               }else {
-                   System.out.printf("%s does not have enough MP to cast %s!%n",heroName,spellName);
-               }
-
-            } else if (command.contains("TakeDamage")) {
-                String[]commandArr=command.split(" - ");
-
-                String heroName=commandArr[1];
-                int  damage= Integer.parseInt(commandArr[2]);
-                String attacker=commandArr[3];
-
-               map.get(heroName).set(0,map.get(heroName).get(0) - damage);
-               if (map.get(heroName).get(0) > 0){
-                   System.out.printf("%s was hit for %d HP by %s and now has %d HP left!%n",heroName,damage,attacker,map.get(heroName).get(0));
-               }else {
-                   System.out.printf("%s has been killed by %s!%n",heroName,attacker);
-                   map.remove(heroName);
-               }
-
-                
-            }else if (command.contains("Recharge")) {
-
-                String[]commandArr=command.split(" - ");
-
-                String heroName=commandArr[1];
-                int  recharge= Integer.parseInt(commandArr[2]);
-
-                int totalRecharged=recharge;
-
-                int initialMP=map.get(heroName).get(1);
-
-                int newMP=initialMP + recharge;
-
-                if (newMP > 200){
-                    newMP=200;
-                    totalRecharged= newMP-initialMP;
-                    map.get(heroName).set(1,newMP);
-                    System.out.printf("%s recharged for %d MP!%n",heroName,totalRecharged);
+                if (map.get(heroName).get(1) - mpNeeded >= 0){
+                   int mp = map.get(heroName).get(1) - mpNeeded;
+                   map.get(heroName).set(1,mp);
+                    System.out.printf("%s has successfully cast %s and now has %d MP!%n",heroName,spell,map.get(heroName).get(1));
                 }else {
-                    System.out.printf("%s recharged for %d MP!%n",heroName,totalRecharged);
-                    map.get(heroName).set(1,newMP);
+                    System.out.printf("%s does not have enough MP to cast %s!%n",heroName,spell);
                 }
 
 
-            }else if (command.contains("Heal")) {
+            } else if (command.equals("TakeDamage")) {
+                String heroName = commandArr[1];
+                int hpDamage = Integer.parseInt(commandArr[2]);
+                String attacker = commandArr[3];
 
-                String[]commandArr=command.split(" - ");
+                int leftHp = map.get(heroName).get(0) - hpDamage;
+                if (leftHp <= 0){
+                    System.out.printf("%s has been killed by %s!%n",heroName,attacker);
+                    map.remove(heroName);
+                }else {
+                    map.get(heroName).set(0,leftHp);
+                    System.out.printf("%s was hit for %d HP by %s and now has %d HP left!%n",heroName,hpDamage,attacker,leftHp);
+                }
 
+            } else if (command.equals("Recharge")) {
                 String heroName=commandArr[1];
-                int  amount= Integer.parseInt(commandArr[2]);
+                int amountMp= Integer.parseInt(commandArr[2]);
 
-                int totalRecharged=amount;
+                int initialMp=map.get(heroName).get(1);
+
+                int currentMp = amountMp + map.get(heroName).get(1);
+
+
+                if (currentMp > 200){
+                    currentMp = 200;
+                    int diff = currentMp - initialMp;
+                    map.get(heroName).set(1,currentMp);
+                    System.out.printf("%s recharged for %d MP!%n",heroName,diff);
+                }else {
+                    map.get(heroName).set(1,currentMp);
+                    System.out.printf("%s recharged for %d MP!%n",heroName,amountMp);
+                }
+
+            }else if (command.equals("Heal")) {
+                String heroName=commandArr[1];
+                int amountHP= Integer.parseInt(commandArr[2]);
 
                 int initialHP=map.get(heroName).get(0);
+                int totalHP= initialHP + amountHP;
 
-                int newHP=initialHP + amount;
 
-                if (newHP > 100){
-                    newHP=100;
-                    totalRecharged= newHP-initialHP;
-                    map.get(heroName).set(0,newHP);
-                    System.out.printf("%s healed for %d HP!%n",heroName,totalRecharged);
+
+                if ( totalHP > 100 ){
+                    totalHP = 100;
+                    int diff = totalHP - initialHP;
+                    map.get(heroName).set(0,totalHP);
+                    System.out.printf("%s healed for %d HP!%n",heroName,diff);
                 }else {
-                    System.out.printf("%s healed for %d HP!%n",heroName,totalRecharged);
-                    map.get(heroName).set(0,newHP);
+                    map.get(heroName).set(0,totalHP);
+                    System.out.printf("%s healed for %d HP!%n",heroName,amountHP);
                 }
-
 
             }
 
 
-            command=scanner.nextLine();
+            commandArr=scanner.nextLine().split(" - ");
         }
+
         for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
-
             System.out.printf("%s%n",entry.getKey());
+            int hp= map.get(entry.getKey()).get(0);
+            int mp= map.get(entry.getKey()).get(1);
 
-            System.out.printf("HP: %d%n",entry.getValue().get(0));
-            System.out.printf("MP: %d%n",entry.getValue().get(1));
+            System.out.printf("HP: %d%n",hp);
+            System.out.printf("MP: %d%n",mp);
         }
+
 
     }
 }
