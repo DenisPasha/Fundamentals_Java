@@ -24,12 +24,6 @@ public class P01ActivationKeys{
                     System.out.printf("Substring not found!%n");
                 }
 
-//                if (inputS.contains(subString)){
-//                    System.out.printf("%s contains %s.%n",inputS,subString);
-//                }else {
-//                    System.out.printf("Substring not found!%n");
-//                }
-
             } else if (command.contains("Flip")) {
 
                 String currentCommand=commandArr[1];
